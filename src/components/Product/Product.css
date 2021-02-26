@@ -1,0 +1,24 @@
+.product{
+    display: flex;
+    border-bottom: 1px solid #0006;
+    margin-top: 20px;
+}
+.product-details{
+    padding: 20px;
+}
+.product-title{
+    color: rgb(37, 37, 243);
+    font-weight: 400;
+}
+.product-price{
+    color: #666;
+}
+.cart-button{
+    background: goldenrod;
+    width: 170px;
+    line-height: 2;
+    border: 1px solid gray;
+    border-radius: 4px;
+    color: rgb(39, 41, 44);
+    cursor: pointer;
+}
