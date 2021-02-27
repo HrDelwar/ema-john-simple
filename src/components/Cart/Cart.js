@@ -10,7 +10,7 @@ const Cart = (props) => {
 
     return (
         <div>
-            <h2 className="cart-title">Order Summary</h2>
+            <h2 className="cart-title">Total Ordered</h2>
             <h5 className="cart-title">Item ordered: {cart.length}</h5>
             <p>SubTotal: {strNumToInt(subTotal)}</p>
             <p>Shipping charge: {shippingCharge}</p>
