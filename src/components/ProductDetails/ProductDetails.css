@@ -1,0 +1,9 @@
+.product-details{
+ width:70%;
+ margin: 0 auto;
+}
+.product-details h2{
+    text-align:center;
+    text-transform:capitalize;
+    color:#666;
+}

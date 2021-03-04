@@ -15,6 +15,7 @@
 }
 .cart-button{
     background: goldenrod;
+    text-transform: uppercase;
     width: 170px;
     line-height: 2;
     border: 1px solid gray;

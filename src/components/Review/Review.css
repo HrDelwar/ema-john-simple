@@ -1,0 +1,8 @@
+.ordered-title{
+    text-align:center;
+    text-transform: capitalize;
+    color: #666;
+}
+.review{
+    display: flex;
+}
