@@ -21,9 +21,9 @@ const Review = () => {
         updateCart();
     }
     const placeOrdered = () => {
+        carts.length && setPlaceOrder(true);
         setCarts([]);
         setOrderedItem(0);
-        setPlaceOrder(true);
         processOrder();
     }
     const updateCart = () => {
