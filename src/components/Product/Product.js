@@ -1,4 +1,4 @@
-import { faInfoCircle, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import './Product.css';
@@ -30,7 +30,7 @@ const Product = (props) => {
                 {props.showCartBtn ? <button
                     className="cart-button"
                     onClick={() => props.addToCard(props.product)}
-                ><FontAwesomeIcon style={{ marginBottom: '2px' }} icon={faShoppingCart} /> add to cart
+                ><FontAwesomeIcon style={{ marginBottom: '2px' }} icon={faCartPlus} /> add to cart
                  </button> : <button className="cart-button"><a href={url} target="_blank" style={{ color: '#333',outline: 'none',textDecoration:'none' }}><FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon> more info</a></button>}
             </div>
         </div>

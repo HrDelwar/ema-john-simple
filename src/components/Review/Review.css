@@ -6,3 +6,13 @@
 .review{
     display: flex;
 }
+.ordered-img {
+    width: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    margin: 0 auto;
+}
+.ordered-img img {
+    width:100%;
+}

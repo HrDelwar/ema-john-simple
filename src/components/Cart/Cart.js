@@ -19,7 +19,7 @@ const Cart = (props) => {
             <p>Shipping charge: ${shippingCharge}</p>
             <p>Tax + VAT: ${vat}</p>
             <p>Total: ${total}</p>
-            <Link to="/review"><button className="cart-button"><FontAwesomeIcon icon={faInfoCircle}></FontAwesomeIcon> review</button></Link>
+            {props.children}
         </div>
     );
 };
