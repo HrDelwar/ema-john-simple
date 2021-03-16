@@ -10,9 +10,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         color: '#fff',
         background: '#349da2',
-        marginLeft:'1rem',
-        '&:hover':{
-            background:'#1b895a'
+        marginLeft: '1rem',
+        '&:hover': {
+            background: '#1b895a'
         }
     },
 }));
@@ -34,7 +34,7 @@ const Header = () => {
                     <li><NavLink to="/shop" activeStyle={activeStyle}>shop</NavLink></li>
                     <li><NavLink to="/review" activeStyle={activeStyle} >order review</NavLink></li>
                     <li><NavLink to="/inventory" activeStyle={activeStyle}>manage inventory </NavLink></li>
-                    {loggedUser.email && <li><Button onClick={() => setLoggedUser({})} className={classes.root}>Log Out</Button></li>}
+                    {loggedUser.email && (loggedUser.displayName || loggedUser.success) && <li><Button onClick={() => setLoggedUser({})} className={classes.root}>Log Out</Button></li>}
                 </ul>
             </nav>
         </header>

@@ -15,33 +15,33 @@ export const signInWithProvidersFirebase = provider => {
     return firebase.auth()
         .signInWithPopup(provider)
         .then(result => result.user)
-        .catch(error => error.message);
+        .catch(error => error);
 }
 export const createNewUser = (userInfo, email, password) => {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(res => {
+            updateUserInfo(userInfo);
             const newUserInfo = res.user;
             newUserInfo.error = '';
             newUserInfo.success = 'User created successfully!';
-            updateUserInfo(userInfo);
             return newUserInfo;
         })
-        .catch((error) => {
+        .catch(error => {
             const errorMessage = error.message;
             const newUserInfo = {};
             newUserInfo.error = errorMessage;
             newUserInfo.success = '';
             return newUserInfo;
-        });
+        })
 }
-const updateUserInfo = (info) => {
+const updateUserInfo = info => {
     const user = firebase.auth().currentUser;
 
     user.updateProfile({
         displayName: info.name,
         photoURL: "https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
     }).then(() => {
-        // console.log('update successfully', info.name);
+        // console.log('update successfully');
     }).catch(error => {
         // console.log('error', error);
     });

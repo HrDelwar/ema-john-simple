@@ -1,0 +1,11 @@
+.submit-btn {
+	background: linear-gradient(45deg,#2c7abd,#73205e);
+	display: inline-block;
+	padding: 10px 20px;
+	border: 0;
+	border-radius: 5px;
+	text-align: center;
+	color: #fff;
+	text-transform: capitalize;
+    cursor: pointer;
+}

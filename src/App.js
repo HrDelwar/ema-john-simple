@@ -21,6 +21,7 @@ export const UserContext = createContext();
 
 function App() {
   const [loggedUser, setLoggedUser] = useState({});
+
   return (
     <UserContext.Provider value={[loggedUser, setLoggedUser]}>
       <Router>

@@ -91,11 +91,7 @@ const Form = ({ newUser, setNewUser }) => {
             createNewUser(userInfo, user.email, user.password)
                 .then(res => {
                     setLoggedUser(res);
-                    setUser(res);
                     history.replace(from);
-                })
-                .catch(err => {
-                    setUser(err)
                 })
         }
         if (!newUser && user.email && user.password) {
@@ -126,8 +122,7 @@ const Form = ({ newUser, setNewUser }) => {
                     <CustomTextField type="submit" value={newUser ? 'Sign Up' : 'Sign In'} variant="outlined" />
                 </Grid>
             </form>
-            {user.success && <p style={{ color: 'green', textAlign: 'center' }}>{user.success}</p>}
-            {user.error && <p style={{ color: 'red', textAlign: 'center' }}>{user.error}</p>}
+            {(loggedUser.message || loggedUser.error) && <p style={{ color: 'red', textAlign: 'center' }}>{loggedUser.message || loggedUser.error}</p>}
         </>
     );
 };
