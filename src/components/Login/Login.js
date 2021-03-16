@@ -7,21 +7,17 @@ import Form from '../Form/Form';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import firebase from "firebase/app";
-import "firebase/auth";
-import firebaseConfig from './firebase.config';
+
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
+import { fbProviderFirebase, firebaseInitialize, googleProviderFirebase, ghProviderFirebase, signInWithProvidersFirebase } from './login.manager';
 
 
-if (firebase.apps.length === 0) {
-    firebase.initializeApp(firebaseConfig);
-}
+firebaseInitialize();
 
-
-const googleProvider = new firebase.auth.GoogleAuthProvider();
-const fbProvider = new firebase.auth.FacebookAuthProvider();
-var ghProvider = new firebase.auth.GithubAuthProvider();
+const googleProvider = googleProviderFirebase();
+const fbProvider = fbProviderFirebase();
+const ghProvider = ghProviderFirebase();
 
 const CustomButton = withStyles((theme) => ({
     root: {
@@ -78,22 +74,20 @@ const Login = () => {
     const classes = useStyle();
     const [newUser, setNewUser] = useState(false);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
+
     const history = useHistory();
     const location = useLocation();
     const { from } = location.state || { from: { pathname: "/" } };
 
     const signInWithProviders = (provider) => {
-        firebase.auth()
-            .signInWithPopup(provider)
-            .then((result) => {
-                const user = result.user;
-                setLoggedUser(user);
+        signInWithProvidersFirebase(provider)
+            .then(res => {
+                setLoggedUser(res);
                 history.replace(from);
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage, errorCode);
-            });
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     return (

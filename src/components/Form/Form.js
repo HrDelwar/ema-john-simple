@@ -1,16 +1,11 @@
 import { Grid, makeStyles, TextField, withStyles } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
-import firebase from "firebase/app";
-import "firebase/auth";
-import firebaseConfig from '../Login/firebase.config';
+
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
+import { createNewUser, firebaseInitialize, handleLogin } from '../Login/login.manager';
 
-
-
-if (firebase.apps.length === 0) {
-    firebase.initializeApp(firebaseConfig);
-}
+firebaseInitialize();
 
 const CustomTextField = withStyles({
     root: {
@@ -83,67 +78,37 @@ const Form = ({ newUser, setNewUser }) => {
             setUser(newUserInfo);
         }
     }
+
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
 
     const submitForm = (e) => {
         if (newUser && user.fname && user.lname && user.email && user.password) {
-            firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
+            const userInfo = {
+                name: `${user.fname} ${user.lname}`
+            };
+            createNewUser(userInfo, user.email, user.password)
                 .then(res => {
-                    // Signed in 
-                    const newUserInfo = { ...user };
-                    newUserInfo.error = '';
-                    newUserInfo.success = 'User created successfully!';
-                    setUser(newUserInfo);
-                    setNewUser(!newUser);
-                    const userInfo = {
-                        name: `${user.fname} ${user.lname}`
-                    };
-                    updateUserInfo(userInfo);
-                })
-                .catch((error) => {
-                    const errorMessage = error.message;
-                    const newUserInfo = { ...user };
-                    newUserInfo.error = errorMessage;
-                    newUserInfo.success = '';
-                    setUser(newUserInfo);
-                });
-        }
-        if (!newUser && user.email && user.password) {
-            firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-                .then(res => {
-                    const newUserInfo = { ...user };
-                    newUserInfo.error = '';
-                    newUserInfo.success = 'User Login successfully!';
-                    setUser(newUserInfo);
-                    setLoggedUser(newUserInfo);
+                    setLoggedUser(res);
+                    setUser(res);
                     history.replace(from);
                 })
-                .catch(error => {
-                    const errorMessage = error.message;
-                    const newUserInfo = { ...user };
-                    newUserInfo.error = errorMessage;
-                    newUserInfo.success = '';
-                    setUser(newUserInfo);
-                });
+                .catch(err => {
+                    setUser(err)
+                })
+        }
+        if (!newUser && user.email && user.password) {
+            handleLogin(user.email, user.password)
+                .then(res => {
+                    setLoggedUser(res);
+                    history.replace(from);
+                })
         }
 
         e.preventDefault();
     }
-    const updateUserInfo = (info) => {
-        var user = firebase.auth().currentUser;
 
-        user.updateProfile({
-            displayName: info.name,
-            photoURL: "https://upload.wikimedia.org/wikipedia/commons/6/67/User_Avatar.png"
-        }).then(() => {
-            // console.log('update successfully', info.name);
-        }).catch(error => {
-            // console.log('error', error);
-        });
-
-    }
     return (
         <>
             <form onSubmit={submitForm} className={classes.root} autoComplete="off">
