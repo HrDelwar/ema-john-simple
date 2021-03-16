@@ -11,6 +11,9 @@
 # production
 /build
 
+#file
+/src/components/Login/firabse.congig.js
+
 # misc
 .DS_Store
 .env.local
