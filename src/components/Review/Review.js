@@ -7,6 +7,7 @@ import Cart from '../Cart/Cart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import coolImg from '../../images/giphy.gif';
+import { useHistory } from 'react-router';
 
 const Review = () => {
     const [carts, setCarts] = useState([]);
@@ -20,11 +21,10 @@ const Review = () => {
         removeFromDatabaseCart(id);
         updateCart();
     }
-    const placeOrdered = () => {
-        carts.length && setPlaceOrder(true);
-        setCarts([]);
-        setOrderedItem(0);
-        processOrder();
+
+    const history = useHistory();
+    const orderProcess = () => {
+        history.push('/shipment');
     }
     const updateCart = () => {
         const productCarts = getDatabaseCart();
@@ -43,7 +43,7 @@ const Review = () => {
     return (
         <div className="review">
             <div className="product-container">
-                <h2 className="ordered-title">{placeOrder ? 'Congratulation!' : 'Ordered item: ' +  orderedItem}</h2>
+                <h2 className="ordered-title">{placeOrder ? 'Congratulation!' : 'Ordered item: ' + orderedItem}</h2>
                 <div className="">
                     {
                         carts.map(pd => <ReviewItem
@@ -59,7 +59,7 @@ const Review = () => {
             </div>
             <div className="cart-container">
                 <Cart ordered={orderedItem} cart={carts}>
-                    <button onClick={placeOrdered} className="cart-button"><FontAwesomeIcon icon={faDollarSign}></FontAwesomeIcon> Order</button>
+                    <button onClick={orderProcess} className="cart-button"><FontAwesomeIcon icon={faDollarSign}></FontAwesomeIcon> Order Process</button>
                 </Cart>
             </div>
         </div>
