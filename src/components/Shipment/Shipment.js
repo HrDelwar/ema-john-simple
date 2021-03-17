@@ -45,7 +45,7 @@ const Shipment = () => {
 
 
     const methods = useForm();
-    const { handleSubmit, control, reset } = methods;
+    const { handleSubmit, control, reset, errors: fields } = methods;
     const onSubmit = data => {
         setInfo(data)
     };
@@ -68,40 +68,28 @@ const Shipment = () => {
                         <Grid item xs={12} md={6} className={classes.container}>
                             <Controller as={CustomTextField} required fullWidth type="text" name="name" control={control} defaultValue={loggedUser.displayName} id="outlined-basic" label="Name" variant="outlined" />
                             <Controller as={CustomTextField} required fullWidth type="email" name="email" control={control} defaultValue={loggedUser.email} id="outlined-basic" label="Email" variant="outlined"
-                                error={info.emailError}
-                                helperText={info.emailError ? 'Enter correct email' : null}
+                                error={fields.email}
+                                helperText={fields.email ? fields.email.message : null}
+                                // helperText={info.emailError ? 'Enter correct email' : null}
                                 rules={{
-                                    validate: value => {
-                                        let validEmail = /\S+@\S+\.\S+/.test(value);
-                                        let emailError = true;
-                                        if (validEmail) {
-                                            emailError = false;
-                                        }
-                                        let newInfo = { ...info };
-                                        newInfo.emailError = emailError;
-                                        setInfo(newInfo);
-                                        return validEmail;
+                                    required: true,
+                                    pattern: {
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                        message: 'Enter correct email address'
                                     }
                                 }}
                             />
                             <Controller as={CustomTextField} required multiline rows="3" fullWidth type="text" name="courierAddress" control={control} id="outlined-basic" label="Courier Address" variant="outlined" />
                             <Controller as={CustomTextField} required
-                                error={info.numError}
-                                helperText={info.numError ? 'Enter correct number' : null}
+                                error={fields.mobile}
+                                helperText={fields.mobile ? fields.mobile.message : null}
                                 rules={{
-                                    validate: value => {
-                                        let validNum = /[8]*01[3-9]\d{8}$/.test(value);
-                                        let numError = true;
-                                        if (validNum) {
-                                            numError = false;
-                                        }
-                                        let newInfo = { ...info }
-                                        newInfo.numError = numError;
-                                        setInfo(newInfo)
-                                        return validNum;
+                                    pattern: {
+                                        value: /[8]*01[3-9]\d{8}$/,
+                                        message: 'Enter correct mobile number'
                                     }
                                 }}
-                                fullWidth type="number" name="mobile" control={control} defaultValue="" id="outlined-basic" label="Mobile" variant="outlined" />
+                                fullWidth type="number" name="mobile" control={control} defaultValue="" id="outlined-basic" label="Mobile No." variant="outlined" />
 
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <input className="submit-btn" type="submit" value="Place order" />
