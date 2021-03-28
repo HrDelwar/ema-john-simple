@@ -5,10 +5,10 @@ import React from 'react';
 import './ReviewItem.css';
 
 const ReviewItem = (props) => {
-    const { name, qty, img, key, price} = props.product;
+    const { name, qty = 1, img, key, price } = props.product;
     const toFixed2 = (num) => num.toFixed(2);
     const priceStyle = {
-        color:'#555'
+        color: '#555'
     }
     return (
         <div className="product-details product-container review-item">

@@ -10,6 +10,7 @@ export const firebaseInitialize = () => {
 export const fbProviderFirebase = () => new firebase.auth.FacebookAuthProvider();
 export const googleProviderFirebase = () => new firebase.auth.GoogleAuthProvider();
 export const ghProviderFirebase = () => new firebase.auth.GithubAuthProvider();
+export const twitterProviderFirebase = () => new firebase.auth.TwitterAuthProvider();;
 
 export const signInWithProvidersFirebase = provider => {
     return firebase.auth()

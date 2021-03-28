@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import './Shop.css';
-import fakeData from '../../fakeData';
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
 import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { CircularProgress, Grid } from '@material-ui/core';
+
+
 const Shop = () => {
-    const first10 = fakeData.slice(0, 10);
-    const [products, setProducts] = useState(first10);
+    document.title = "Shop || Ema-John-Simple"
+    const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([])
     const [order, setOrder] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+
+
     const addToCard = (product) => {
         const newCart = [...cart, product];
         const sameItem = newCart.filter(pd => pd.key === product.key);
@@ -21,30 +26,53 @@ const Shop = () => {
         setOrder(order + 1);
     }
     useEffect(() => {
+        fetch('https://lit-ridge-69490.herokuapp.com/products')
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data)
+                setIsLoading(false)
+            })
+    }, [])
+
+    useEffect(() => {
         const carts = getDatabaseCart();
         const cartsKeys = Object.keys(carts);
         const productValues = Object.values(carts);
         const totalOrder = productValues.reduce((sum, acc) => acc + sum, 0)
 
-        const cartProducts = cartsKeys.map(key => {
-            const product = fakeData.find(pd => pd.key === key);
-            product.qty = carts[key]
-            return product;
-        });
+        fetch('https://lit-ridge-69490.herokuapp.com/cartProducts', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cartsKeys)
+        })
+            .then(res => res.json())
+            .then(data => {
+                const newData = data.map((pd, index) => {
+                    pd.qty = productValues[index];
+                    return pd;
+                })
+                setCart(newData)
+            })
         setOrder(totalOrder);
-        setCart(cartProducts)
     }, [])
 
     return (
         <div className='shop-container'>
             <div className="product-container">
                 {
-                    products.map(product => <Product
-                        showCartBtn={true}
-                        key={product.key}
-                        product={product}
-                        addToCard={addToCard}
-                    />)
+                    isLoading ?
+                        <Grid container justify="center" alignItems="center" style={{ minHeight: 'calc(100vh - 200px)' }}>
+                            <CircularProgress />
+                        </Grid>
+                        :
+                        products.map(product => <Product
+                            showCartBtn={true}
+                            key={product.key}
+                            product={product}
+                            addToCard={addToCard}
+                        />)
                 }
             </div>
             <div className="cart-container">

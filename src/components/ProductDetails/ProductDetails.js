@@ -1,15 +1,39 @@
-import React from 'react';
+import { CircularProgress, Grid } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import fakeData from '../../fakeData';
 import Product from '../Product/Product';
 import './ProductDetails.css';
+
 const ProductDetails = () => {
-    const {productKey} = useParams();
-    const product = fakeData.find(pd => pd.key === productKey);
+    document.title = "Product || Ema-John-Simple"
+
+    const { productKey } = useParams();
+    const [product, setProduct] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
+
+
+    useEffect(() => {
+        fetch('https://lit-ridge-69490.herokuapp.com/product/' + productKey)
+            .then(res => res.json())
+            .then(data => {
+                setProduct(data)
+                setIsLoading(false)
+            })
+    }, [productKey])
+
+
     return (
         <div className="product-details">
             <h2>Product Details</h2>
-            <Product product={product} showCartBtn={false}></Product>
+            {
+                isLoading ?
+                    <Grid container justify="center" alignItems="center" style={{ minHeight: 'calc(100vh - 400px)' }}>
+                        <CircularProgress />
+                    </Grid>
+                    :
+                    product.key && <Product product={product} showCartBtn={false}></Product>
+            }
         </div>
     );
 };

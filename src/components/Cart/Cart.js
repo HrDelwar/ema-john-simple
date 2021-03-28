@@ -1,8 +1,6 @@
 import React from 'react';
 import './Cart.css';
-import {Link} from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 const Cart = (props) => {
     const strNumToInt = (num) => Number(num.toFixed(2));
     const cart = props.cart;

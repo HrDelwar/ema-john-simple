@@ -10,7 +10,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router';
-import { fbProviderFirebase, firebaseInitialize, googleProviderFirebase, ghProviderFirebase, signInWithProvidersFirebase } from './login.manager';
+import { fbProviderFirebase, firebaseInitialize, googleProviderFirebase, ghProviderFirebase, signInWithProvidersFirebase, twitterProviderFirebase } from './login.manager';
 
 
 firebaseInitialize();
@@ -18,6 +18,7 @@ firebaseInitialize();
 const googleProvider = googleProviderFirebase();
 const fbProvider = fbProviderFirebase();
 const ghProvider = ghProviderFirebase();
+const twitterProvider = twitterProviderFirebase();
 
 const CustomButton = withStyles((theme) => ({
     root: {
@@ -71,6 +72,7 @@ const useStyle = makeStyles(theme => ({
 
 
 const Login = () => {
+    document.title="Login || Ema-John-Simple"
     const classes = useStyle();
     const [newUser, setNewUser] = useState(false);
     const [loggedUser, setLoggedUser] = useContext(UserContext);
@@ -82,7 +84,9 @@ const Login = () => {
     const signInWithProviders = (provider) => {
         signInWithProvidersFirebase(provider)
             .then(res => {
-                setLoggedUser(res);
+                const newUser = {...res};
+                newUser.success = "User login success";
+                setLoggedUser(newUser);
                 history.replace(from);
             })
             .catch(err => {
@@ -114,6 +118,7 @@ const Login = () => {
                         sign-in  with github
                     </CustomButton>
                     <CustomButton
+                        onClick={() => signInWithProviders(twitterProvider)}
                         variant="outlined"
                         startIcon={<TwitterIcon />}
                     >

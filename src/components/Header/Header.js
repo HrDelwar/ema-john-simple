@@ -34,7 +34,7 @@ const Header = () => {
                     <li><NavLink to="/shop" activeStyle={activeStyle}>shop</NavLink></li>
                     <li><NavLink to="/review" activeStyle={activeStyle} >order review</NavLink></li>
                     <li><NavLink to="/inventory" activeStyle={activeStyle}>manage inventory </NavLink></li>
-                    {loggedUser.email && (loggedUser.displayName || loggedUser.success) && <li><Button onClick={() => setLoggedUser({})} className={classes.root}>Log Out</Button></li>}
+                    {(loggedUser.email || (loggedUser.displayName && loggedUser.success)) && <li><Button onClick={() => setLoggedUser({})} className={classes.root}>Log Out</Button></li>}
                 </ul>
             </nav>
         </header>
