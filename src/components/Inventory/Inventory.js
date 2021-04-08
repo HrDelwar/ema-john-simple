@@ -6,6 +6,243 @@ import { useForm, Controller } from "react-hook-form";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const CustomTextField = withStyles({
     root: {
         '& label.Mui-focused': {
@@ -29,7 +266,7 @@ const CustomTextField = withStyles({
 })(TextField);
 
 const useStyles = makeStyles((theme) => ({
-   
+
     container: {
         '& > *': {
             margin: theme.spacing(1),
@@ -80,19 +317,17 @@ const Inventory = () => {
     }
 
     const previewFile = () => event => {
-        var file = event.target.files[0];
-        var reader = new FileReader();
+        const file = event.target.files[0];
+        const reader = new FileReader();
 
         reader.onloadend = function () {
             setImage(reader.result);
         }
 
-        if (file) {
+        if (file)
             reader.readAsDataURL(file);
-        } else {
-            setImage('')
-        }
-
+        else
+            setImage('');
     }
 
     return (
@@ -144,7 +379,7 @@ const Inventory = () => {
                                     </Button>
                                 </label>
 
-                                <div style={{ display: 'flex', justifyContent: 'center', marginBottom:'2rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
                                     <Button type="submit" variant="contained" >Add Data</Button>
                                 </div>
                             </Grid>
