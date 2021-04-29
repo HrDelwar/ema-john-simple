@@ -10,4 +10,4 @@
  React, React-router, React-hook-form, Visa card payment, Node.js, Express.js,
  Firebase, Bootstrap, MaterialUI, MongoDB.
 
-### Developed by [HrDelewar](https://www.linkedin.com/in/hrdelwar/)
+### Developed by [HrDelwar](https://www.linkedin.com/in/hrdelwar/)
