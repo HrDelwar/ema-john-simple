@@ -11,7 +11,6 @@ import {
 
 const SidebarCart = () => {
   const { carts, setCarts } = useContext(CartContext);
-  const [orderedItem, setOrderedItem] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -36,16 +35,17 @@ const SidebarCart = () => {
   const history = useHistory();
 
   const orderProcess = () => {
-    if (orderedItem > 0) history.push("/shipment");
-    else history.push("/shop");
+    if (carts.length > 0) {
+      history.push("/shipment");
+    } else {
+      history.push("/shop");
+    }
   };
 
   const updateCart = () => {
     const productCarts = getDatabaseCart();
     const productsKey = Object.keys(productCarts);
     const productValues = Object.values(productCarts);
-    const totalOrder = productValues.reduce((sum, acc) => acc + sum, 0);
-
     fetch("https://lit-ridge-69490.herokuapp.com/cartProducts", {
       method: "POST",
       headers: {
@@ -62,7 +62,6 @@ const SidebarCart = () => {
         setCarts(newData);
         setIsLoading(false);
       });
-    setOrderedItem(totalOrder);
   };
 
   return (
